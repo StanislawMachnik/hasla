@@ -1,4 +1,4 @@
-package com.example.zadanie3;
+package com.example.zadania;
 
 import android.os.Bundle;
 import android.view.View;
@@ -36,61 +36,77 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String temail = String.valueOf(email.getText());
-                        String thaslo = String.valueOf(pass1.getText());
-                        String tpotwierdz = String.valueOf(pass2.getText());
-                        int silaHasla = 0;
-                        boolean znakiSpecjalne = false;
-                        boolean znakiLiczby = false;
-                        boolean znakiUppercase = false;
-                        boolean znakiLowercase = false;
-                        String blad = "";
-                        String dodajDoHaslo = "";
-                        if(!temail.contains("@")){
-                            blad = "Niepoprawny adres e-mail";
-                        } else if (!thaslo.equals(tpotwierdz)) {
-                            blad = "Hasła się różnią";
-                        }else{
-                            String znaki = "!@#$%^&*()_+-=?/.,<>{}|[]";
-                            String liczby = "1234567890";
+                        String checkEmail = String.valueOf(email.getText());
+                        String checkPass1 = String.valueOf(pass1.getText());
+                        String checkPass2 = String.valueOf(pass2.getText());
+
+                        int passStrength = 0;
+                        boolean charsSpecial = false;
+                        boolean charsNumber = false;
+                        boolean charsUppercase = false;
+                        boolean charsLowercase = false;
+                        String error = "";
+                        String addToPass = "";
+
+                        if(!checkEmail.contains("@")){
+                            error = "Niepoprawny adres e-mail";
+                        }
+                        else if (!checkPass1.equals(checkPass2)) {
+                            error = "Hasła się różnią";
+                        }
+                        else{
+                            String chars = "!@#$%^&*()_+-=?/.,<>{}|[]";
+                            String numbers = "1234567890";
                             String uppercase = "QWERTYUIOPASDFGHJKLZXCVBNM";
                             String lowercase = "qwertyuiopasdfghjklzxcvbnm";
-                            for (int i = 0; i < thaslo.length(); i++){
-                                if(lowercase.contains(thaslo.charAt(i)+"")){
-                                    znakiLowercase = true;
-                                    dodajDoHaslo += "\nBrak małej litery";
+
+                            for (int i = 0; i < checkPass1.length(); i++){
+                                if(chars.contains(checkPass1.charAt(i)+"")){
+                                    charsSpecial = true;
                                 }
-                                if(znaki.contains(thaslo.charAt(i)+"")){
-                                    znakiSpecjalne = true;
-                                    dodajDoHaslo += "\nBrak dużej litery";
+
+                                if(numbers.contains(checkPass1.charAt(i)+"")){
+                                    charsNumber = true;
                                 }
-                                if(liczby.contains(thaslo.charAt(i)+"")){
-                                    znakiLiczby = true;
-                                    dodajDoHaslo += "\nBrak liczby";
+
+                                if(uppercase.contains(checkPass1.charAt(i)+"")){
+                                    charsUppercase = true;
                                 }
-                                if(uppercase.contains(thaslo.charAt(i)+"")){
-                                    znakiUppercase = true;
-                                    dodajDoHaslo += "\nZnaku specjalnego";
+
+                                if(lowercase.contains(checkPass1.charAt(i)+"")){
+                                    charsLowercase = true;
                                 }
                             }
-                            if(thaslo.length() >= 10){
-                                silaHasla++;
+                            if(checkPass1.length() >= 10){
+                                passStrength++;
                             }
-                            if (znakiSpecjalne){
-                                silaHasla++;
+                            if(charsSpecial){
+                                passStrength++;
                             }
-                            if(znakiLiczby){
-                                silaHasla++;
+                            if(charsNumber){
+                                passStrength++;
                             }
-                            if(znakiLowercase){
-                                silaHasla++;
+                            if(charsLowercase){
+                                passStrength++;
                             }
-                            if(znakiUppercase){
-                                silaHasla++;
+                            if(charsUppercase){
+                                passStrength++;
                             }
-                            blad = "Witaj "+temail+"\n Siła hasła = "+silaHasla+dodajDoHaslo;
+                            if(!charsUppercase){
+                                addToPass += "\nBrak dużej litery";
+                            }
+                            if(!charsLowercase){
+                                addToPass += "\nBrak małej litery";
+                            }
+                            if(!charsNumber){
+                                addToPass += "\nBrak liczby";
+                            }
+                            if(!charsSpecial){
+                                addToPass += "\nBrak znaku specjalnego";
+                            }
+                            error = "Witaj " + checkEmail + "\n Siła hasła = " + passStrength + addToPass;
                         }
-                        message.setText(blad);
+                        message.setText(error);
                     }
                 }
         );
