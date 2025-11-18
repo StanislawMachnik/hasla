@@ -61,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
                         boolean charsUppercase = false;
                         boolean charsLowercase = false;
 
+                        errorBoxChars.setText("");
+                        errorBoxNumbers.setText("");
+                        errorBoxLowercase.setText("");
+                        errorBoxUppercase.setText("");
+
                         if(!checkEmail.contains("@")){
                             errorMessage = "Niepoprawny adres e-mail";
                         }
