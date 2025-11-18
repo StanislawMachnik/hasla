@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
                         else if (!checkPass1.equals(checkPass2)) {
                             errorMessage = "Hasła się różnią";
                         }
+                        else if (checkPass1.isEmpty() && checkPass2.isEmpty()) {
+                            errorMessage = "Podaj hasło";
+                        }
                         else{
                             String chars = "!@#$%^&*()_+-=?/.,<>{}|[]";
                             String numbers = "1234567890";
@@ -146,4 +149,4 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
     }
-}
+}}
