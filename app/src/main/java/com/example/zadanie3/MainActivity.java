@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView errorBoxNumbers;
     private TextView errorBoxLowercase;
     private TextView errorBoxUppercase;
+    private TextView errorBoxLength;
     private TextView strength;
 
     @Override
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         errorBoxNumbers = findViewById(R.id.errorBoxNumbers);
         errorBoxLowercase = findViewById(R.id.errorBoxLowercase);
         errorBoxUppercase = findViewById(R.id.errorBoxUppercase);
+        errorBoxLength = findViewById(R.id.errorBoxLength);
         strength = findViewById(R.id.strength);
 
         submit.setOnClickListener(
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                         errorBoxNumbers.setText("");
                         errorBoxLowercase.setText("");
                         errorBoxUppercase.setText("");
+                        errorBoxLength.setText("");
 
                         if(!checkEmail.contains("@")){
                             errorMessage = "Niepoprawny adres e-mail";
@@ -142,11 +145,21 @@ public class MainActivity extends AppCompatActivity {
 
                             if(checkPass1.length() >= 10){
                                 passStrength++;
+                                errorBoxLength.setText("Hasło ma co najmniej 10 znaków!");
+                                errorBoxLength.setTextColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_light));
                             }
-
-                            strengthMessage = "Siła: " + passStrength;
+                            else{
+                                errorBoxLength.setText("Hasło jest krótsze niż 10 znaków!");
+                                errorBoxLength.setTextColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_red_light));
+                            }
+                            String level = "";
+                            for(int i = 0; i < passStrength; i++){
+                                level += " |";
+                            }
+                            strengthMessage = "Siła hasła:" + level;
                             welcomeMessage = "Witaj " + checkEmail + "!";
                         }
+
                         message.setText(welcomeMessage);
                         errorBox.setText(errorMessage);
                         strength.setText(strengthMessage);
@@ -154,4 +167,4 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
     }
-}}
+}
