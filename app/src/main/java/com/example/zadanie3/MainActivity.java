@@ -1,4 +1,4 @@
-package com.example.zadania;
+package com.example.zadanie3;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,17 +53,12 @@ public class MainActivity extends AppCompatActivity {
                         String welcomeMessage = "";
                         String errorMessage = "";
                         String strengthMessage = "";
-                        String addToPass = "";
+                        String strengthLevel = "";
                         int passStrength = 0;
 
                         String checkEmail = String.valueOf(email.getText());
                         String checkPass1 = String.valueOf(pass1.getText());
                         String checkPass2 = String.valueOf(pass2.getText());
-
-                        boolean charsSpecial = false;
-                        boolean charsNumber = false;
-                        boolean charsUppercase = false;
-                        boolean charsLowercase = false;
 
                         errorBoxChars.setText("");
                         errorBoxNumbers.setText("");
@@ -79,30 +76,11 @@ public class MainActivity extends AppCompatActivity {
                             errorMessage = "Podaj hasło";
                         }
                         else{
-                            String chars = "!@#$%^&*()_+-=?/.,<>{}|[]";
-                            String numbers = "1234567890";
-                            String uppercase = "QWERTYUIOPASDFGHJKLZXCVBNM";
-                            String lowercase = "qwertyuiopasdfghjklzxcvbnm";
+                            boolean charsSpecial = checkPass1.matches(".*[!@#$%^&*()_+\\-=?.<>\\[\\]{}|/].*");
+                            boolean charsNumber = checkPass1.matches(".*[0-9].*");
+                            boolean charsUppercase = checkPass1.matches(".*[A-Z].*");
+                            boolean charsLowercase = checkPass1.matches(".*[a-z].*");
 
-                            for (int i = 0; i < checkPass1.length(); i++){
-                                String password = checkPass1.charAt(i)+"";
-
-                                if(chars.contains(password)){
-                                    charsSpecial = true;
-                                }
-
-                                if(numbers.contains(password)){
-                                    charsNumber = true;
-                                }
-
-                                if(uppercase.contains(password)){
-                                    charsUppercase = true;
-                                }
-
-                                if(lowercase.contains(password)){
-                                    charsLowercase = true;
-                                }
-                            }
                             if(charsSpecial){
                                 passStrength++;
                                 errorBoxChars.setText("Są znaki specjalne!");
@@ -152,11 +130,12 @@ public class MainActivity extends AppCompatActivity {
                                 errorBoxLength.setText("Hasło jest krótsze niż 10 znaków!");
                                 errorBoxLength.setTextColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_red_light));
                             }
-                            String level = "";
-                            for(int i = 0; i < passStrength; i++){
-                                level += " |";
+
+                            for(int i = 1; i <= passStrength; i++){
+                                strengthLevel += " |";
                             }
-                            strengthMessage = "Siła hasła:" + level;
+
+                            strengthMessage = "Siła hasła:" + strengthLevel;
                             welcomeMessage = "Witaj " + checkEmail + "!";
                         }
 
